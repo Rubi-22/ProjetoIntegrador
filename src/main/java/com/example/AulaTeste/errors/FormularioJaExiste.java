@@ -1,9 +1,9 @@
 package com.example.AulaTeste.errors;
 
-public class UsuarioJaExiste extends RuntimeException {
+public class FormularioJaExiste extends RuntimeException {
   private String mensagem;
-  public UsuarioJaExiste() {
-    this.mensagem = "Usuario já existe";
+  public FormularioJaExiste() {
+    this.mensagem = "Formulario já existe";
   }
 
   public String getMensagem() {

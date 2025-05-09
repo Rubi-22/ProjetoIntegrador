@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.AulaTeste.errors.UsuarioJaExiste;
 import com.example.AulaTeste.model.UserModel;
 import com.example.AulaTeste.service.UsuarioService;
 
@@ -30,7 +29,7 @@ public class UsuarioController {
         try {
             var user = usuarioService.criarUsuario(userModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
-        } catch (UsuarioJaExiste e) {
+        } catch (Error e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
@@ -53,14 +52,6 @@ public class UsuarioController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserModel userModel) {
-        boolean autenticado = usuarioService.autenticar(userModel.getEmail(), userModel.getSenha());
-        if (autenticado) {
-            return ResponseEntity.ok("Autenticação bem-sucedida");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorreta");
-    }
 
     @DeleteMapping("/deletar")
     public ResponseEntity<Void> deletUser(@RequestParam String email) {

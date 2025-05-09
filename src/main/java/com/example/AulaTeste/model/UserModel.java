@@ -1,4 +1,4 @@
-package segurancadotrabalho.formulario.model;
+package com.example.AulaTeste.model;
 
 import java.util.UUID;
 import jakarta.persistence.Column;
@@ -14,28 +14,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Usuario {
+public class UserModel {
    
     @Id()
     @GeneratedValue()
     private UUID codigo_usuario;
 
-    @Column(name = "nome da empresa")
-    private String nome_da_empresa;
+    @Column(name = "razao_social")
+    private String razao_social;
 
-    @Column(name = "nome")
+    @Column(name = "nome_fantasia")
     private String nome;
 
-    @Column(name = "idade")
-    private String idade;
+    @Column(name = "ramo_de_atividade")
+    private String ramo_de_atividade;
 
-    @Column(name = "dataDeNascimento")
-    private String dataDeNascimento;
+    @Column(name = "data_de_fundacao")
+    private String data_de_fundacao; 
 
-    @Column(name = "cpf")
-    private String cpf;
+    @Column(name = "cnpj")
+    private String cnpj;
 
-    @Column(name = "endereco")
+    @Column(name = "endereco_comercial")
     private String endereco;
 
     @Column(name = "email")
@@ -43,5 +43,11 @@ public class Usuario {
 
     @Column(name  = "telefone")
     private String telefone;
+
+    @Column(name  = "site")
+    private String site;
+
+    @Column(name  = "responsavel")
+    private String responsavel;
  
 }
