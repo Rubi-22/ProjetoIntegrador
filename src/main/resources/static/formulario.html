@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Segurança do Trabalho</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 800px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #fff;
+            margin: 25px 0 15px 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select option {
+            background: #6e8efb;
+            color: #fff;
+        }
+
+        ::placeholder {
+            color: #fff;
+            opacity: 0.7;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .checkbox-group label {
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 30px;
+            background: #fff;
+            color: #6e8efb;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #6e8efb;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                width: 95%;
+                padding: 25px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="#">
+            <h1>Formulário de Segurança do Trabalho</h1>
+            
+            <!-- Parte 1: Cabeçalho -->
+            <div class="form-section">
+                <h2>Informações Básicas</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="nome_dos_trabalhadores" placeholder="Nome dos Trabalhadores" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="nome_de_empresa" placeholder="Nome da Empresa" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="numero_do_ptp" placeholder="Número do PTP" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="hora_do_inicio_e_previsao_do_termino" placeholder="Horário (Início e Término Previsto)" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="setor" placeholder="Setor" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="local_especifico" placeholder="Local Específico" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="endereco_comercial" placeholder="Endereço Comercial" required>
+                </div>
+            </div>
+            
+            <!-- Parte 2: Atividades -->
+            <div class="form-section">
+                <h2>Atividades a Serem Realizadas</h2>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="trabalho_em_altura" name="trabalho_em_altura">
+                    <label for="trabalho_em_altura">Trabalho em Altura</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="energia_perigosas" name="energia_perigosas">
+                    <label for="energia_perigosas">Energias Perigosas</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="equipamentos_moveis" name="equipamentos_moveis">
+                    <label for="equipamentos_moveis">Equipamentos Móveis</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="icamento_de_cargas" name="icamento_de_cargas">
+                    <label for="icamento_de_cargas">Içamento de Cargas</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="espaco_confinado" name="espaco_confinado">
+                    <label for="espaco_confinado">Espaço Confinado</label>
+                </div>
+                
+                <div class="form-group">
+                    <textarea name="outras_atividades" placeholder="Outras Atividades"></textarea>
+                </div>
+            </div>
+            
+            <!-- Parte 3: Riscos -->
+            <div class="form-section">
+                <h2>Riscos das Atividades</h2>
+                <div class="form-group">
+                    <textarea name="todos_riscos_vao_ser_enviados_por_wpp" placeholder="Observações sobre Riscos (serão enviados por WhatsApp)"></textarea>
+                </div>
+            </div>
+            
+            <!-- Parte 4: Responsáveis -->
+            <div class="form-section">
+                <h2>Assinaturas dos Responsáveis</h2>
+                
+                <div class="form-group">
+                    <input type="text" name="assinatura_do_responavel_da_equipe_de_trabalho" placeholder="Responsável da Equipe de Trabalho" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="assinatura_do_responsavel_pelo_site" placeholder="Responsável pelo Site" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="assinatura_do_tecnico_de_seguranca" placeholder="Técnico de Segurança" required>
+                </div>
+            </div>
+            
+            <button type="submit">Enviar Formulário</button>
+        </form>
+    </div>
+</body>
+</html>
