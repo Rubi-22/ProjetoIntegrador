@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,7 +26,7 @@
             padding: 40px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 0;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
         }
 
@@ -47,30 +47,32 @@
             margin-bottom: 20px;
         }
 
+        /* Estilo uniforme para todos os inputs */
         input, select, textarea {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
             border: none;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.7); /* Fundo branco semi-transparente */
+            border-radius: 0;
+            color: #000; /* Texto em preto */
             font-size: 16px;
             outline: none;
         }
 
         textarea {
-            min-height: 100px;
+            min-height: 150px;
             resize: vertical;
+            line-height: 1.6;
         }
 
         select option {
-            background: #6e8efb;
+            background: #4CAF50;
             color: #fff;
         }
 
         ::placeholder {
-            color: #fff;
+            color: #000;
             opacity: 0.7;
         }
 
@@ -78,16 +80,19 @@
             display: flex;
             align-items: center;
             margin: 10px 0;
+            cursor: pointer;
         }
 
         .checkbox-group input {
             width: auto;
             margin-right: 10px;
+            cursor: pointer;
         }
 
         .checkbox-group label {
             color: #fff;
             opacity: 0.9;
+            cursor: pointer;
         }
 
         button {
@@ -95,9 +100,9 @@
             padding: 15px;
             margin: 20px 0;
             border: none;
-            border-radius: 30px;
+            border-radius: 0;
             background: #fff;
-            color: #6e8efb;
+            color: #4CAF50;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -105,7 +110,7 @@
         }
 
         button:hover {
-            background: #6e8efb;
+            background: #4CAF50;
             color: #fff;
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -155,7 +160,10 @@
                         <input type="text" name="numero_do_ptp" placeholder="Número do PTP" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="hora_do_inicio_e_previsao_do_termino" placeholder="Horário (Início e Término Previsto)" required>
+                        <input type="text" name="hora_do_inicio" placeholder="Horário de Início" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="hora_do_termino_previsto" placeholder="Horário de Término Previsto" required>
                     </div>
                 </div>
                 
@@ -211,7 +219,7 @@
             <div class="form-section">
                 <h2>Riscos das Atividades</h2>
                 <div class="form-group">
-                    <textarea name="todos_riscos_vao_ser_enviados_por_wpp" placeholder="Observações sobre Riscos (serão enviados por WhatsApp)"></textarea>
+                    <textarea name="todos_riscos_vao_ser_enviados_por_wpp" id="riscos_atividades" placeholder="Observações sobre Riscos (serão enviados por WhatsApp)"></textarea>
                 </div>
             </div>
             
@@ -235,5 +243,75 @@
             <button type="submit">Enviar Formulário</button>
         </form>
     </div>
+
+    <script>
+        // Mapeamento de atividades para riscos
+        const riscosPorAtividade = {
+            trabalho_em_altura: [
+                "Queda de altura",
+                "Queda de materiais",
+                "Instabilidade da estrutura",
+                "Condições climáticas adversas"
+            ],
+            energia_perigosas: [
+                "Choque elétrico",
+                "Arco voltaico",
+                "Queimaduras",
+                "Incêndio"
+            ],
+            equipamentos_moveis: [
+                "Atropelamento",
+                "Queda de máquina",
+                "Aperto entre objetos",
+                "Ruído excessivo"
+            ],
+            icamento_de_cargas: [
+                "Queda de carga",
+                "Rompimento de cabo",
+                "Sobrecarga",
+                "Movimento brusco da carga"
+            ],
+            espaco_confinado: [
+                "Deficiência de oxigênio",
+                "Intoxicação por gases",
+                "Incêndio/explosão",
+                "Queda dentro do espaço"
+            ]
+        };
+
+        // Função para atualizar os riscos
+        function atualizarRiscos() {
+            const textareaRiscos = document.getElementById('riscos_atividades');
+            let riscos = [];
+            
+            // Verifica cada checkbox marcado
+            document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(checkbox => {
+                const atividade = checkbox.id;
+                if (riscosPorAtividade[atividade]) {
+                    riscos = riscos.concat(riscosPorAtividade[atividade]);
+                }
+            });
+            
+            // Adiciona riscos das outras atividades se houver texto
+            const outrasAtividades = document.querySelector('textarea[name="outras_atividades"]').value;
+            if (outrasAtividades.trim() !== '') {
+                riscos.push("Riscos específicos das atividades adicionais devem ser avaliados");
+            }
+            
+            // Atualiza o textarea com mais espaçamento
+            if (riscos.length > 0) {
+                textareaRiscos.value = "RISCOS IDENTIFICADOS:\n\n" + riscos.join("\n\n");
+            } else {
+                textareaRiscos.value = "";
+            }
+        }
+
+        // Adiciona listeners para os checkboxes e textarea
+        document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', atualizarRiscos);
+        });
+
+        document.querySelector('textarea[name="outras_atividades"]').addEventListener('input', atualizarRiscos);
+    </script>
 </body>
 </html>

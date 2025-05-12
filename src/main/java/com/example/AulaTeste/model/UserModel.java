@@ -23,8 +23,8 @@ public class UserModel {
     @Column(name = "razao_social")
     private String razao_social;
 
-    @Column(name = "nome_fantasia")
-    private String nome;
+   // @Column(name = "nome_fantasia")
+    //private String nome;
 
     @Column(name = "ramo_de_atividade")
     private String ramo_de_atividade;
@@ -43,9 +43,6 @@ public class UserModel {
 
     @Column(name  = "telefone")
     private String telefone;
-
-    @Column(name  = "site")
-    private String site;
 
     @Column(name  = "responsavel")
     private String responsavel;

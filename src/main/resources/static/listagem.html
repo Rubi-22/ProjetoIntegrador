@@ -1,0 +1,97 @@
+<html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Formulários</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f4f4f4;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #fff;
+      }
+      th,
+      td {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+      th {
+        background: #6e8efb;
+        color: #fff;
+      }
+      tr:nth-child(even) {
+        background: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todos os Formulários Cadastrados</h1>
+    <table id="tabelaFormularios">
+      <thead>
+        <tr>
+          <th>UUID</th>
+          <th>Nome Trabalhadores</th>
+          <th>Empresa</th>
+          <th>PTP</th>
+          <th>Horário</th>
+          <th>Setor</th>
+          <th>Local</th>
+          <!-- adicione outras colunas conforme quiser -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- será preenchido pelo JS -->
+      <tr>
+            <td>43ea4e42-c84b-4680-8c6d-06bd8c63098a</td>
+            <td>rubi oliveira henzi</td>
+            <td>gjrkghrehgrg</td>
+            <td>15252</td>
+            <td>rgjkrhgrkhtr</td>
+            <td>kfvjgjgjregh</td>
+            <td>tjhrktrkthr</td>
+          </tr></tbody>
+    </table>
+
+    <div id="mensagemLista" style="margin-top: 1em"></div>
+
+    <a href="./formulario.html">Cadastro de formulario</a>
+    <script>
+      async function carregarFormularios() {
+        try {
+          const resp = await fetch("/Formulario/todos");
+          if (resp.status === 204) {
+            document.getElementById("mensagemLista").textContent =
+              "Nenhum formulário cadastrado.";
+            return;
+          }
+          const lista = await resp.json();
+          const tbody = document.querySelector("#tabelaFormularios tbody");
+          lista.forEach((f) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td>${f.codigo_usuario}</td>
+            <td>${f.nome_dos_trabalhadores}</td>
+            <td>${f.nomeEmpresa}</td>
+            <td>${f.numero_do_ptp}</td>
+            <td>${f.hora_do_inicio_e_previsao_do_termino}</td>
+            <td>${f.setor}</td>
+            <td>${f.local_especifico}</td>
+          `;
+            tbody.appendChild(tr);
+          });
+        } catch (err) {
+          document.getElementById("mensagemLista").textContent =
+            "Erro ao carregar: " + err;
+        }
+      }
+
+      // ao carregar a página, busca e monta a tabela
+      window.addEventListener("DOMContentLoaded", carregarFormularios);
+    </script>
+  
+
+</body></html>
