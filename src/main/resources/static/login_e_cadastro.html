@@ -10,10 +10,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
+            color: #000;
         }
 
         body {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            background: #c9c9c9;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,24 +24,25 @@
         .container {
             position: relative;
             width: 800px;
-            height: 500px;
+            height: auto; /* Altura automática para acomodar mais campos */
+            min-height: 500px;
             margin: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
             border-radius: 0;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            overflow-y: auto; /* Adiciona scroll vertical se necessário */
         }
 
         .form-container {
             position: absolute;
             width: 50%;
             height: 100%;
-            padding: 50px;
+            padding: 30px; /* Reduzi o padding para caber mais campos */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Alinhar no topo */
             transition: all 0.6s ease-in-out;
+            overflow-y: auto;
         }
 
         .sign-in-container {
@@ -66,32 +68,34 @@
         }
 
         h1 {
-            color: #fff;
-            margin-bottom: 30px;
+            color: #000;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
+            margin-bottom: 20px;
             text-align: center;
+            font-size: 24px;
         }
 
         input {
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             border: none;
-            background: rgba(255, 255, 255, 0.7); /* Fundo branco semi-transparente */
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 0;
-            color: #000; /* Texto em preto */
-            font-size: 16px;
+            color: #000;
+            font-size: 14px;
             outline: none;
         }
 
         input::placeholder {
-            color: #000; /* Placeholder em preto */
-            opacity: 0.7;
+            color: #333;
+            opacity: 0.8;
         }
 
         button {
             width: 100%;
-            padding: 15px;
-            margin: 20px 0;
+            padding: 12px;
+            margin: 15px 0;
             border: none;
             border-radius: 0;
             background: #fff;
@@ -103,14 +107,15 @@
         }
 
         button:hover {
-            background: #4CAF50;
+            background: #000;
             color: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         a {
-            color: #fff;
+            color: #000;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
             text-decoration: none;
             font-size: 14px;
             margin: 10px 0;
@@ -184,35 +189,53 @@
         }
 
         .overlay-panel h1 {
-            color: #fff;
+            color: #000;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
         }
 
         .overlay-panel p {
-            color: #fff;
+            color: #000;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
             margin: 20px 0;
         }
 
         .ghost {
             background: transparent;
-            border: 2px solid #fff;
-            color: #fff;
+            border: 2px solid #000;
+            color: #000;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
         }
 
         .ghost:hover {
-            background: #fff;
-            color: #4CAF50;
+            background: #000;
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
 
         @media (max-width: 768px) {
             .container {
-                width: 90%;
+                width: 95%;
                 height: auto;
                 min-height: 500px;
             }
 
             .form-container {
                 width: 100%;
-                padding: 30px;
+                padding: 25px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
             }
 
             .overlay-container {
@@ -231,12 +254,53 @@
         <div class="form-container sign-up-container">
             <form action="#">
                 <h1>Criar Conta</h1>
-                <input type="text" placeholder="Nome" required />
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Senha" required />
+                
+                <!-- Dados da Empresa -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="razao_social" placeholder="Razão Social" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="ramo_de_atividade" placeholder="Ramo de Atividade" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="date" name="data_de_fundacao" placeholder="Data de Fundação" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="cnpj" placeholder="CNPJ" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="endereco_comercial" placeholder="Endereço Comercial" required>
+                </div>
+                
+                <!-- Dados de Acesso -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="senha" placeholder="Senha" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="tel" name="telefone" placeholder="Telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="responsavel" placeholder="Responsável" required>
+                    </div>
+                </div>
+                
                 <button type="submit">Cadastrar</button>
             </form>
         </div>
+        
         <div class="form-container sign-in-container">
             <form action="#">
                 <h1>Entrar</h1>
@@ -246,6 +310,7 @@
                 <button type="submit">Login</button>
             </form>
         </div>
+        
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
