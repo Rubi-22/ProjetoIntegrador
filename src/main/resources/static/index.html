@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login e Cadastro - Segurança do Trabalho</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset e fonte base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", "Arial", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      /* Container principal */
+      .container {
+        position: relative;
+        width: 900px;
+        max-width: 95%;
+        min-height: 550px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .form-container {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        padding: 40px;
+        transition: all 0.6s ease-in-out;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sign-in-container {
+        left: 0;
+        z-index: 2;
+        background: #fff;
+      }
+
+      .sign-up-container {
+        left: 0;
+        opacity: 0;
+        z-index: 1;
+        background: #fff;
+        overflow-y: auto;
+      }
+
+      .container.right-panel-active .sign-in-container {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      .container.right-panel-active .sign-up-container {
+        transform: translateX(100%);
+        opacity: 1;
+        z-index: 3;
+      }
+
+      /* Scrollbar personalizada */
+      .sign-up-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .sign-up-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      .sign-up-container::-webkit-scrollbar-thumb {
+        background: #ff6b35;
+        border-radius: 10px;
+      }
+
+      /* Cabeçalhos */
+      h1 {
+        margin-bottom: 24px;
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+        color: #333;
+      }
+
+      /* Formulários */
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+        position: relative;
+      }
+
+      /* Labels */
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      /* Inputs */
+      input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        border-color: #ff6b35;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        outline: none;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 12px;
+        top: 38px;
+        color: #999;
+        font-size: 16px;
+      }
+
+      .form-group:focus-within .input-icon {
+        color: #ff6b35;
+      }
+
+      /* Botões */
+      button {
+        margin-top: 16px;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        background: #ff6b35;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button:hover {
+        background: #e85826;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+      }
+
+      button i {
+        margin-right: 8px;
+      }
+
+      /* Link esqueceu senha */
+      a {
+        margin-top: 16px;
+        font-size: 14px;
+        text-decoration: none;
+        color: #555;
+        text-align: center;
+        transition: color 0.3s;
+      }
+
+      a:hover {
+        color: #ff6b35;
+      }
+
+      /* Overlay lateral */
+      .overlay-container {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        transition: transform 0.6s ease-in-out;
+        z-index: 5;
+      }
+
+      .container.right-panel-active .overlay-container {
+        transform: translateX(-100%);
+      }
+
+      .overlay {
+        background: linear-gradient(135deg, #ff6b35 0%, #f03c02 100%);
+        position: relative;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        transition: transform 0.6s ease-in-out;
+      }
+
+      .container.right-panel-active .overlay {
+        transform: translateX(50%);
+      }
+
+      .overlay-panel {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .overlay-left {
+        transform: translateX(-20%);
+        transition: transform 0.6s ease-in-out;
+      }
+
+      .overlay-right {
+        right: 0;
+        transform: translateX(0);
+        transition: transform 0.6s ease-in-out;
+      }
+
+      .container.right-panel-active .overlay-left {
+        transform: translateX(0);
+      }
+
+      .container.right-panel-active .overlay-right {
+        transform: translateX(20%);
+      }
+
+      .overlay-panel h1 {
+        margin-bottom: 16px;
+        font-size: 32px;
+        color: #fff;
+      }
+
+      .overlay-panel p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .overlay-icon {
+        font-size: 64px;
+        margin-bottom: 24px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .overlay-panel button {
+        background: transparent;
+        border: 2px solid #fff;
+        margin-top: 16px;
+      }
+
+      .overlay-panel button:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Grid para formulário de cadastro */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .form-grid .form-group:last-child,
+      .form-grid .form-group.full-width {
+        grid-column: span 2;
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+        .container {
+          min-height: auto;
+        }
+
+        .form-container,
+        .overlay-container {
+          position: relative;
+          width: 100%;
+          height: auto;
+          left: 0;
+        }
+
+        .overlay-container {
+          display: none;
+        }
+
+        .sign-in-container,
+        .sign-up-container {
+          transform: translateX(0);
+          opacity: 1;
+          position: relative;
+          height: auto;
+          padding: 30px;
+        }
+
+        .sign-up-container {
+          display: none;
+        }
+
+        .container.mobile-signup .sign-in-container {
+          display: none;
+        }
+
+        .container.mobile-signup .sign-up-container {
+          display: block;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-grid .form-group {
+          grid-column: span 1;
+        }
+
+        .mobile-toggle {
+          display: block;
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <!-- FORMULÁRIO DE CADASTRO -->
+      <div class="form-container sign-up-container">
+        <form id="signupForm">
+          <h1>Cadastro Empresarial</h1>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="razao_social">Razão Social</label>
+              <i class="fas fa-building input-icon"></i>
+              <input
+                id="razao_social"
+                name="razao_social"
+                type="text"
+                placeholder="Empresa XYZ Ltda"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cnpj">CNPJ</label>
+              <i class="fas fa-id-card input-icon"></i>
+              <input
+                id="cnpj"
+                name="cnpj"
+                type="text"
+                placeholder="00.000.000/0001-00"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="ramo_de_atividade">Ramo de Atividade</label>
+              <i class="fas fa-industry input-icon"></i>
+              <input
+                id="ramo_de_atividade"
+                name="ramo_de_atividade"
+                type="text"
+                placeholder="Construção Civil"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="data_de_fundacao">Data de Fundação</label>
+              <i class="fas fa-calendar-alt input-icon"></i>
+              <input
+                id="data_de_fundacao"
+                name="data_de_fundacao"
+                type="date"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="endereco_comercial">Endereço Comercial</label>
+              <i class="fas fa-map-marker-alt input-icon"></i>
+              <input
+                id="endereco_comercial"
+                name="endereco_comercial"
+                type="text"
+                placeholder="Rua Exemplo, 123 - Bairro - Cidade/UF"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signup-email">Email Corporativo</label>
+              <i class="fas fa-envelope input-icon"></i>
+              <input
+                id="signup-email"
+                name="email"
+                type="email"
+                placeholder="contato@empresa.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <i class="fas fa-phone input-icon"></i>
+              <input
+                id="telefone"
+                name="telefone"
+                type="tel"
+                placeholder="(00) 00000-0000"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="responsavel">Responsável</label>
+              <i class="fas fa-user-tie input-icon"></i>
+              <input
+                id="responsavel"
+                name="responsavel"
+                type="text"
+                placeholder="Nome do Responsável"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cargo_responsavel">Cargo do Responsável</label>
+              <i class="fas fa-briefcase input-icon"></i>
+              <input
+                id="cargo_responsavel"
+                name="cargo_responsavel"
+                type="text"
+                placeholder="Diretor, Gerente, etc."
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signup-senha">Senha</label>
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                id="signup-senha"
+                name="senha"
+                type="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="confirmar-senha">Confirmar Senha</label>
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                id="confirmar-senha"
+                name="confirmar_senha"
+                type="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit">
+            <i class="fas fa-user-plus"></i>
+            Cadastrar Empresa
+          </button>
+        </form>
+      </div>
+
+      <!-- FORMULÁRIO DE LOGIN -->
+      <div class="form-container sign-in-container">
+        <form id="loginForm">
+          <h1>Acesso ao Sistema</h1>
+
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <i class="fas fa-envelope input-icon"></i>
+            <input
+              id="login-email"
+              name="email"
+              type="email"
+              placeholder="contato@empresa.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="login-senha">Senha</label>
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              id="login-senha"
+              name="senha"
+              type="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <button type="submit">
+            <i class="fas fa-sign-in-alt"></i>
+            Entrar
+          </button>
+
+          <a href="#">Esqueceu sua senha?</a>
+
+          <div class="mobile-toggle" style="display: none">
+            <a href="#" id="mobileSignUp">Não tem uma conta? Cadastre-se</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- OVERLAY -->
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <i class="fas fa-hard-hat overlay-icon"></i>
+            <h1>Bem-vindo de Volta!</h1>
+            <p>
+              Acesse sua conta para gerenciar a segurança do trabalho da sua
+              empresa de forma eficiente e completa.
+            </p>
+            <button class="ghost" id="signIn">
+              <i class="fas fa-sign-in-alt"></i>
+              Entrar
+            </button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <i class="fas fa-shield-alt overlay-icon"></i>
+            <h1>Segurança em Primeiro Lugar</h1>
+            <p>
+              Cadastre sua empresa e tenha acesso a ferramentas completas para
+              gestão de segurança do trabalho, conformidade com normas e
+              proteção dos seus colaboradores.
+            </p>
+            <button class="ghost" id="signUp">
+              <i class="fas fa-user-plus"></i>
+              Cadastrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Controle dos painéis
+      const container = document.getElementById("container");
+
+      document.getElementById("signUp").addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+      });
+
+      document.getElementById("signIn").addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+      });
+
+      // Mobile toggle
+      if (window.innerWidth <= 768) {
+        const mobileToggle = document.querySelector(".mobile-toggle");
+        mobileToggle.style.display = "block";
+
+        document
+          .getElementById("mobileSignUp")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            container.classList.add("mobile-signup");
+          });
+
+        // Adicionar botão voltar no mobile
+        const backButton = document.createElement("a");
+        backButton.href = "#";
+        backButton.id = "mobileSignIn";
+        backButton.textContent = "Já tem uma conta? Faça login";
+        backButton.style.marginTop = "20px";
+        backButton.style.textAlign = "center";
+        document.getElementById("signupForm").appendChild(backButton);
+
+        document
+          .getElementById("mobileSignIn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            container.classList.remove("mobile-signup");
+          });
+      }
+
+      // Máscara para CNPJ
+      document.getElementById("cnpj").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 14) value = value.slice(0, 14);
+
+        if (value.length > 12) {
+          value = value.replace(
+            /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/,
+            "$1.$2.$3/$4-$5"
+          );
+        } else if (value.length > 8) {
+          value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d*)/, "$1.$2.$3/$4");
+        } else if (value.length > 5) {
+          value = value.replace(/^(\d{2})(\d{3})(\d*)/, "$1.$2.$3");
+        } else if (value.length > 2) {
+          value = value.replace(/^(\d{2})(\d*)/, "$1.$2");
+        }
+
+        e.target.value = value;
+      });
+
+      // Máscara para telefone
+      document
+        .getElementById("telefone")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 11) value = value.slice(0, 11);
+
+          if (value.length > 10) {
+            value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+          } else if (value.length > 6) {
+            value = value.replace(/^(\d{2})(\d{4})(\d*)/, "($1) $2-$3");
+          } else if (value.length > 2) {
+            value = value.replace(/^(\d{2})(\d*)/, "($1) $2");
+          }
+
+          e.target.value = value;
+        });
+
+      // Validação de senha
+      document
+        .getElementById("confirmar-senha")
+        .addEventListener("input", function (e) {
+          const senha = document.getElementById("signup-senha").value;
+          const confirmarSenha = e.target.value;
+
+          if (senha !== confirmarSenha) {
+            e.target.setCustomValidity("As senhas não coincidem");
+          } else {
+            e.target.setCustomValidity("");
+          }
+        });
+
+      // Requisições
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData.entries());
+
+          // Remover confirmar_senha antes de enviar
+          delete data.confirmar_senha;
+
+          try {
+            const res = await fetch("/usuarios/criar", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            if (res.ok) {
+              alert(
+                "Cadastro realizado com sucesso! Você já pode fazer login."
+              );
+              e.target.reset();
+              container.classList.remove("right-panel-active");
+              container.classList.remove("mobile-signup");
+            } else {
+              const err = await res.text();
+              alert("Erro: " + err);
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão. Verifique sua internet e tente novamente.");
+          }
+        });
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const creds = Object.fromEntries(new FormData(e.target).entries());
+
+          try {
+            const res = await fetch("/usuarios/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(creds),
+            });
+
+            if (res.ok) {
+              alert("Login bem-sucedido! Redirecionando para o painel...");
+              e.target.reset();
+              window.location.href = "./listagem.html";
+            } else if (res.status === 401) {
+              alert("Credenciais incorretas. Verifique seu email e senha.");
+            } else {
+              const err = await res.text();
+              alert("Erro: " + err);
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Erro de conexão. Verifique sua internet e tente novamente.");
+          }
+        });
+    </script>
+  </body>
+</html>

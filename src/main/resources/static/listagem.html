@@ -1,97 +1,697 @@
-<html lang="pt-br"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Formulários</title>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listagem de Formulários - Segurança do Trabalho</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
+      /* Reset e fonte base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", "Arial", sans-serif;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f4f4f4;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        min-height: 100vh;
+        padding: 30px;
+        color: #333;
       }
-      table {
-        border-collapse: collapse;
-        width: 100%;
+
+      /* Container principal */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Cabeçalho */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        position: relative;
+        padding-left: 40px;
+      }
+
+      .header h1::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background-color: #ff6b35;
+        border-radius: 8px;
+        opacity: 0.8;
+      }
+
+      .header h1::after {
+        content: "\f5a0";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 16px;
+      }
+
+      /* Botões */
+      .btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        background: #ff6b35;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: #e85826;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      .btn-secondary {
         background: #fff;
+        color: #555;
+        border: 1px solid #ddd;
       }
+
+      .btn-secondary:hover {
+        background: #f9f9f9;
+        color: #ff6b35;
+        border-color: #ff6b35;
+      }
+
+      /* Card */
+      .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .card-header {
+        background: #f9f9f9;
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .card-header h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #555;
+        display: flex;
+        align-items: center;
+      }
+
+      .card-header h2 i {
+        margin-right: 10px;
+        color: #ff6b35;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      /* Tabela */
+      .table-container {
+        overflow-x: auto;
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 14px;
+      }
+
       th,
       td {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
+        padding: 16px;
         text-align: left;
+        border-bottom: 1px solid #eee;
       }
+
       th {
-        background: #6e8efb;
+        background: #f5f5f5;
+        font-weight: 600;
+        color: #555;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      th:hover {
+        background: #f0f0f0;
+      }
+
+      th i {
+        margin-left: 5px;
+        font-size: 12px;
+      }
+
+      tr:hover {
+        background-color: rgba(255, 107, 53, 0.03);
+      }
+
+      /* Status badges */
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .badge-success {
+        background: rgba(46, 204, 113, 0.1);
+        color: #2ecc71;
+      }
+
+      .badge-warning {
+        background: rgba(241, 196, 15, 0.1);
+        color: #f1c40f;
+      }
+
+      .badge-danger {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+      }
+
+      /* Ações */
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+        color: #555;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .action-btn:hover {
+        background: #ff6b35;
         color: #fff;
       }
-      tr:nth-child(even) {
-        background: #f9f9f9;
+
+      /* Mensagem vazia */
+      .empty-state {
+        padding: 40px;
+        text-align: center;
+      }
+
+      .empty-state i {
+        font-size: 48px;
+        color: #ddd;
+        margin-bottom: 20px;
+      }
+
+      .empty-state h3 {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      .empty-state p {
+        color: #888;
+        margin-bottom: 20px;
+      }
+
+      /* Filtros */
+      .filters {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .filter-group {
+        position: relative;
+        min-width: 200px;
+      }
+
+      .filter-group input,
+      .filter-group select {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        transition: all 0.3s;
+      }
+
+      .filter-group input:focus,
+      .filter-group select:focus {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        outline: none;
+      }
+
+      .filter-group i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 16px;
+      }
+
+      /* Paginação */
+      .pagination {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        gap: 5px;
+      }
+
+      .pagination button {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        color: #555;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .pagination button:hover {
+        border-color: #ff6b35;
+        color: #ff6b35;
+      }
+
+      .pagination button.active {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #ff6b35;
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .filters {
+          flex-direction: column;
+        }
+
+        .filter-group {
+          width: 100%;
+        }
+
+        th,
+        td {
+          padding: 12px 10px;
+        }
+
+        .hide-mobile {
+          display: none;
+        }
+      }
+
+      /* Scrollbar personalizada */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ff6b35;
+        border-radius: 10px;
       }
     </style>
   </head>
   <body>
-    <h1>Todos os Formulários Cadastrados</h1>
-    <table id="tabelaFormularios">
-      <thead>
-        <tr>
-          <th>UUID</th>
-          <th>Nome Trabalhadores</th>
-          <th>Empresa</th>
-          <th>PTP</th>
-          <th>Horário</th>
-          <th>Setor</th>
-          <th>Local</th>
-          <!-- adicione outras colunas conforme quiser -->
-        </tr>
-      </thead>
-      <tbody>
-        <!-- será preenchido pelo JS -->
-      <tr>
-            <td>43ea4e42-c84b-4680-8c6d-06bd8c63098a</td>
-            <td>rubi oliveira henzi</td>
-            <td>gjrkghrehgrg</td>
-            <td>15252</td>
-            <td>rgjkrhgrkhtr</td>
-            <td>kfvjgjgjregh</td>
-            <td>tjhrktrkthr</td>
-          </tr></tbody>
-    </table>
+    <div class="container">
+      <div class="header">
+        <h1>Formulários Cadastrados</h1>
+        <div>
+          <a href="./formulario.html" class="btn">
+            <i class="fas fa-plus"></i>
+            Novo Formulário
+          </a>
+          <button class="btn btn-secondary">
+            <i class="fas fa-file-export"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
 
-    <div id="mensagemLista" style="margin-top: 1em"></div>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-filter"></i> Filtros</h2>
+        </div>
+        <div class="card-body">
+          <div class="filters">
+            <div class="filter-group">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Buscar por nome..."
+              />
+            </div>
+            <div class="filter-group">
+              <i class="fas fa-building"></i>
+              <select id="empresaFilter">
+                <option value="">Todas as empresas</option>
+                <!-- Será preenchido pelo JS -->
+              </select>
+            </div>
+            <div class="filter-group">
+              <i class="fas fa-map-marker-alt"></i>
+              <select id="setorFilter">
+                <option value="">Todos os setores</option>
+                <!-- Será preenchido pelo JS -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <a href="./formulario.html">Cadastro de formulario</a>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-clipboard-list"></i> Lista de Formulários</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-container">
+            <table id="tabelaFormularios">
+              <thead>
+                <tr>
+                  <th>ID <i class="fas fa-sort"></i></th>
+                  <th>Trabalhadores <i class="fas fa-sort"></i></th>
+                  <th>Empresa <i class="fas fa-sort"></i></th>
+                  <th>PTP <i class="fas fa-sort"></i></th>
+                  <th>Horário <i class="fas fa-sort"></i></th>
+                  <th>Setor <i class="fas fa-sort"></i></th>
+                  <th>Local <i class="fas fa-sort"></i></th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Será preenchido pelo JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="emptyState" class="empty-state" style="display: none">
+            <i class="fas fa-clipboard"></i>
+            <h3>Nenhum formulário encontrado</h3>
+            <p>
+              Não há formulários cadastrados ou que correspondam aos filtros
+              aplicados.
+            </p>
+            <a href="./formulario.html" class="btn">
+              <i class="fas fa-plus"></i>
+              Cadastrar Formulário
+            </a>
+          </div>
+
+          <div class="pagination">
+            <button><i class="fas fa-chevron-left"></i></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
+      // Função para carregar os formulários
       async function carregarFormularios() {
         try {
           const resp = await fetch("/Formulario/todos");
+
+          // Se não houver formulários
           if (resp.status === 204) {
-            document.getElementById("mensagemLista").textContent =
-              "Nenhum formulário cadastrado.";
+            document.getElementById("emptyState").style.display = "block";
+            document.querySelector(".table-container").style.display = "none";
+            document.querySelector(".pagination").style.display = "none";
             return;
           }
+
           const lista = await resp.json();
           const tbody = document.querySelector("#tabelaFormularios tbody");
+
+          // Limpar tabela
+          tbody.innerHTML = "";
+
+          // Preencher tabela com dados
           lista.forEach((f) => {
+            // Gerar um status aleatório para demonstração
+            const statusOptions = [
+              '<span class="badge badge-success">Concluído</span>',
+              '<span class="badge badge-warning">Em andamento</span>',
+              '<span class="badge badge-danger">Pendente</span>',
+            ];
+            const randomStatus =
+              statusOptions[Math.floor(Math.random() * statusOptions.length)];
+
+            // Criar linha da tabela
             const tr = document.createElement("tr");
             tr.innerHTML = `
-            <td>${f.codigo_usuario}</td>
-            <td>${f.nome_dos_trabalhadores}</td>
-            <td>${f.nomeEmpresa}</td>
-            <td>${f.numero_do_ptp}</td>
-            <td>${f.hora_do_inicio_e_previsao_do_termino}</td>
-            <td>${f.setor}</td>
-            <td>${f.local_especifico}</td>
-          `;
+              <td>${f.codigo_usuario.substring(0, 8)}...</td>
+              <td>${f.nome_dos_trabalhadores}</td>
+              <td>${f.nome_de_empresa || "N/A"}</td>
+              <td>${f.numero_do_ptp || "N/A"}</td>
+              <td>${f.hora_do_inicio_e_previsao_do_termino || "N/A"}</td>
+              <td>${f.setor || "N/A"}</td>
+              <td>${f.local_especifico || "N/A"}</td>
+              <td>${randomStatus}</td>
+              <td>
+                <div class="actions">
+                  <button class="action-btn" title="Visualizar">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="action-btn" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="action-btn" title="Excluir">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            `;
             tbody.appendChild(tr);
           });
+
+          // Preencher filtros com dados únicos
+          preencherFiltros(lista);
+
+          // Mostrar tabela e esconder mensagem vazia
+          document.getElementById("emptyState").style.display = "none";
+          document.querySelector(".table-container").style.display = "block";
+          document.querySelector(".pagination").style.display = "flex";
         } catch (err) {
-          document.getElementById("mensagemLista").textContent =
-            "Erro ao carregar: " + err;
+          console.error(err);
+          document.getElementById("emptyState").style.display = "block";
+          document.querySelector(".table-container").style.display = "none";
+          document.querySelector(".pagination").style.display = "none";
+
+          const errorMessage = document.querySelector("#emptyState p");
+          errorMessage.textContent =
+            "Erro ao carregar os formulários. Tente novamente mais tarde.";
         }
       }
 
-      // ao carregar a página, busca e monta a tabela
+      // Função para preencher os filtros com dados únicos
+      function preencherFiltros(lista) {
+        // Empresas únicas
+        const empresas = [
+          ...new Set(lista.map((item) => item.nome_de_empresa).filter(Boolean)),
+        ];
+        const empresaSelect = document.getElementById("empresaFilter");
+
+        empresas.forEach((empresa) => {
+          const option = document.createElement("option");
+          option.value = empresa;
+          option.textContent = empresa;
+          empresaSelect.appendChild(option);
+        });
+
+        // Setores únicos
+        const setores = [
+          ...new Set(lista.map((item) => item.setor).filter(Boolean)),
+        ];
+        const setorSelect = document.getElementById("setorFilter");
+
+        setores.forEach((setor) => {
+          const option = document.createElement("option");
+          option.value = setor;
+          option.textContent = setor;
+          setorSelect.appendChild(option);
+        });
+      }
+
+      // Função para filtrar a tabela
+      function filtrarTabela() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const empresaFilter = document.getElementById("empresaFilter").value;
+        const setorFilter = document.getElementById("setorFilter").value;
+
+        const rows = document.querySelectorAll("#tabelaFormularios tbody tr");
+        let visibleCount = 0;
+
+        rows.forEach((row) => {
+          const trabalhadores = row.cells[1].textContent.toLowerCase();
+          const empresa = row.cells[2].textContent;
+          const setor = row.cells[5].textContent;
+
+          const matchSearch = trabalhadores.includes(searchTerm);
+          const matchEmpresa =
+            empresaFilter === "" || empresa === empresaFilter;
+          const matchSetor = setorFilter === "" || setor === setorFilter;
+
+          if (matchSearch && matchEmpresa && matchSetor) {
+            row.style.display = "";
+            visibleCount++;
+          } else {
+            row.style.display = "none";
+          }
+        });
+
+        // Mostrar mensagem vazia se não houver resultados
+        if (visibleCount === 0) {
+          document.getElementById("emptyState").style.display = "block";
+          document.querySelector(".pagination").style.display = "none";
+        } else {
+          document.getElementById("emptyState").style.display = "none";
+          document.querySelector(".pagination").style.display = "flex";
+        }
+      }
+
+      // Adicionar eventos de filtro
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filtrarTabela);
+      document
+        .getElementById("empresaFilter")
+        .addEventListener("change", filtrarTabela);
+      document
+        .getElementById("setorFilter")
+        .addEventListener("change", filtrarTabela);
+
+      // Ordenação da tabela
+      document
+        .querySelectorAll("#tabelaFormularios th")
+        .forEach((header, index) => {
+          header.addEventListener("click", () => {
+            sortTable(index);
+          });
+        });
+
+      function sortTable(columnIndex) {
+        const table = document.getElementById("tabelaFormularios");
+        let switching = true;
+        let direction = "asc";
+        let switchcount = 0;
+
+        while (switching) {
+          switching = false;
+          const rows = table.rows;
+
+          for (let i = 1; i < rows.length - 1; i++) {
+            let shouldSwitch = false;
+            const x = rows[i].getElementsByTagName("td")[columnIndex];
+            const y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+
+            if (direction === "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (direction === "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+          } else {
+            if (switchcount === 0 && direction === "asc") {
+              direction = "desc";
+              switching = true;
+            }
+          }
+        }
+
+        // Atualizar ícones de ordenação
+        document
+          .querySelectorAll("#tabelaFormularios th i")
+          .forEach((icon, index) => {
+            if (index === columnIndex) {
+              icon.className =
+                direction === "asc" ? "fas fa-sort-up" : "fas fa-sort-down";
+            } else {
+              icon.className = "fas fa-sort";
+            }
+          });
+      }
+
+      // Ao carregar a página, busca e monta a tabela
       window.addEventListener("DOMContentLoaded", carregarFormularios);
     </script>
-  
-
-</body></html>
+  </body>
+</html>

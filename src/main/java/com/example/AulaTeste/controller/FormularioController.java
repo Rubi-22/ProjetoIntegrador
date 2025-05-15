@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.AulaTeste.model.FormularioModel;
-import com.example.AulaTeste.model.FormularioModel;
-import com.example.AulaTeste.service.FormularioService;
 import com.example.AulaTeste.service.FormularioService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,15 +36,6 @@ public class FormularioController {
     public ResponseEntity<List<FormularioModel>> getAllUsers() {
         var Formulario = FormularioService.listarFormulario();
         if (Formulario.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.ok(Formulario);
-    }
-
-    @GetMapping("/buscar")
-    public ResponseEntity<FormularioModel> getUser(@RequestParam String email) {
-        var Formulario = FormularioService.buscarnome_de_empresa(email);
-        if (Formulario == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(Formulario);

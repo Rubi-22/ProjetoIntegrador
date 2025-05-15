@@ -58,4 +58,13 @@ public class UsuarioController {
         usuarioService.deletarPorEmail(email);
         return ResponseEntity.ok().build();
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserModel userModel) {
+        boolean autenticado = usuarioService.autenticar(userModel.getEmail(), userModel.getSenha());
+        if (autenticado) {
+            return ResponseEntity.ok("Autenticação bem-sucedida");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorreta");
+    }
 }

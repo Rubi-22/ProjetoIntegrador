@@ -1,319 +1,834 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulário de Segurança do Trabalho</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-            color: #000; /* Cor padrão do texto para preto */
-        }
+      /* Reset e fonte base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", "Arial", sans-serif;
+      }
 
-        body {
-            background: #c9c9c9; /* Fundo cinza */
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        color: #333;
+      }
 
-        .form-container {
-            width: 800px;
-            padding: 40px;
-            background: linear-gradient(135deg, #4CAF50, #2E7D32); /* Mantém o gradiente verde */
-            border-radius: 0;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-        }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
 
-        h1, h2 {
-            color: #000; /* Títulos em preto */
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.3); /* Sombra para melhor legibilidade */
-        }
+      /* Cabeçalho */
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
 
-        h1 {
-            margin-bottom: 30px;
-            text-align: center;
-        }
+      .header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+      }
 
-        h2 {
-            margin: 25px 0 15px 0;
-            font-size: 18px;
-        }
+      .header h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: #ff6b35;
+        border-radius: 2px;
+      }
 
+      .header p {
+        color: #666;
+        font-size: 16px;
+      }
+
+      /* Formulário */
+      .form-container {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      /* Seções do formulário */
+      .form-section {
+        padding: 30px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .form-section:last-child {
+        border-bottom: none;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #eee;
+      }
+
+      .section-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 107, 53, 0.1);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+      }
+
+      .section-icon i {
+        color: #ff6b35;
+        font-size: 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #444;
+      }
+
+      /* Campos do formulário */
+      .form-group {
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #ff6b35;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        outline: none;
+      }
+
+      .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+        padding-left: 12px;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 12px;
+        top: 38px;
+        color: #999;
+        font-size: 16px;
+      }
+
+      .form-group:focus-within .input-icon {
+        color: #ff6b35;
+      }
+
+      /* Grid para layout */
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      /* Checkboxes estilizados */
+      .checkbox-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        background: #f9f9f9;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .checkbox-group:hover {
+        background: #f0f0f0;
+        border-color: #ddd;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        cursor: pointer;
+        accent-color: #ff6b35;
+      }
+
+      .checkbox-group label {
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+
+      /* Botões */
+      .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 14px 25px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
+
+      .btn-primary {
+        background: #ff6b35;
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: #e85826;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+      }
+
+      .btn-secondary {
+        background: #f0f0f0;
+        color: #555;
+      }
+
+      .btn-secondary:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      /* Riscos */
+      .risks-container {
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        border-left: 4px solid #ff6b35;
+      }
+
+      .risks-title {
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #444;
+        display: flex;
+        align-items: center;
+      }
+
+      .risks-title i {
+        color: #ff6b35;
+        margin-right: 8px;
+      }
+
+      .risk-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #eee;
+      }
+
+      .risk-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .risk-item i {
+        color: #ff6b35;
+        margin-right: 10px;
+        margin-top: 3px;
+      }
+
+      /* Assinaturas */
+      .signature-field {
+        position: relative;
+      }
+
+      .signature-field::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        right: 0;
+        height: 1px;
+        background: #ddd;
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
         .form-section {
-            margin-bottom: 20px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            background: rgba(255, 255, 255, 0.9); /* Fundo branco quase sólido */
-            border-radius: 0;
-            color: #000;
-            font-size: 16px;
-            outline: none;
-        }
-
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        select option {
-            background: #4CAF50;
-            color: #fff;
-        }
-
-        ::placeholder {
-            color: #333; /* Placeholder em cinza escuro */
-            opacity: 0.8;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            cursor: pointer;
-        }
-
-        .checkbox-group input {
-            width: auto;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            color: #000; /* Texto dos labels em preto */
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
-            opacity: 0.9;
-            cursor: pointer;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border: none;
-            border-radius: 0;
-            background: #fff;
-            color: #4CAF50;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            background: #000;
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+          padding: 20px;
         }
 
         .form-row {
-            display: flex;
-            gap: 15px;
+          grid-template-columns: 1fr;
+          gap: 15px;
         }
 
-        .form-row .form-group {
-            flex: 1;
+        .checkbox-container {
+          grid-template-columns: 1fr;
         }
 
-        @media (max-width: 768px) {
-            .form-container {
-                width: 95%;
-                padding: 25px;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
+        .form-buttons {
+          flex-direction: column;
         }
+      }
+
+      /* Scrollbar personalizada */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ff6b35;
+        border-radius: 10px;
+      }
     </style>
-</head>
-<body>
-    <div class="form-container">
-        <form action="#">
-            <h1>Formulário de Segurança do Trabalho</h1>
-            
-            <!-- Parte 1: Cabeçalho -->
-            <div class="form-section">
-                <h2>Informações Básicas</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" name="nome_dos_trabalhadores" placeholder="Nome dos Trabalhadores" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="nome_de_empresa" placeholder="Nome da Empresa" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" name="numero_do_ptp" placeholder="Número do PTP" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="hora_do_inicio" placeholder="Horário de Início" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="hora_do_termino_previsto" placeholder="Horário de Término Previsto" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" name="setor" placeholder="Setor" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="local_especifico" placeholder="Local Específico" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <input type="text" name="endereco_comercial" placeholder="Endereço Comercial" required>
-                </div>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Formulário de Segurança do Trabalho</h1>
+        <p>
+          Preencha todos os campos para registrar as atividades e riscos
+          associados
+        </p>
+      </div>
+
+      <form id="formSeguranca" action="#" method="post">
+        <div class="form-container">
+          <!-- Parte 1: Informações Básicas -->
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <h2 class="section-title">Informações Básicas</h2>
             </div>
-            
-            <!-- Parte 2: Atividades -->
-            <div class="form-section">
-                <h2>Atividades a Serem Realizadas</h2>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="trabalho_em_altura" name="trabalho_em_altura">
-                    <label for="trabalho_em_altura">Trabalho em Altura</label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="energia_perigosas" name="energia_perigosas">
-                    <label for="energia_perigosas">Energias Perigosas</label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="equipamentos_moveis" name="equipamentos_moveis">
-                    <label for="equipamentos_moveis">Equipamentos Móveis</label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="icamento_de_cargas" name="icamento_de_cargas">
-                    <label for="icamento_de_cargas">Içamento de Cargas</label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="espaco_confinado" name="espaco_confinado">
-                    <label for="espaco_confinado">Espaço Confinado</label>
-                </div>
-                
-                <div class="form-group">
-                    <textarea name="outras_atividades" placeholder="Outras Atividades"></textarea>
-                </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome_dos_trabalhadores"
+                  >Nome dos Trabalhadores</label
+                >
+                <i class="fas fa-users input-icon"></i>
+                <input
+                  type="text"
+                  id="nome_dos_trabalhadores"
+                  name="nome_dos_trabalhadores"
+                  placeholder="Ex: João Silva, Maria Santos"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="nome_de_empresa">Nome da Empresa</label>
+                <i class="fas fa-building input-icon"></i>
+                <input
+                  type="text"
+                  id="nome_de_empresa"
+                  name="nome_de_empresa"
+                  placeholder="Ex: Construtora Segura Ltda"
+                  required
+                />
+              </div>
             </div>
-            
-            <!-- Parte 3: Riscos -->
-            <div class="form-section">
-                <h2>Riscos das Atividades</h2>
-                <div class="form-group">
-                    <textarea name="todos_riscos_vao_ser_enviados_por_wpp" id="riscos_atividades" placeholder="Observações sobre Riscos (serão enviados por WhatsApp)"></textarea>
-                </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="numero_do_ptp">Número do PTP</label>
+                <i class="fas fa-hashtag input-icon"></i>
+                <input
+                  type="text"
+                  id="numero_do_ptp"
+                  name="numero_do_ptp"
+                  placeholder="Ex: PTP-2023-001"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="hora_do_inicio">Horário de Início</label>
+                <i class="fas fa-clock input-icon"></i>
+                <input
+                  type="time"
+                  id="hora_do_inicio"
+                  name="hora_do_inicio"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="hora_do_termino_previsto"
+                  >Horário de Término Previsto</label
+                >
+                <i class="fas fa-hourglass-end input-icon"></i>
+                <input
+                  type="time"
+                  id="hora_do_termino_previsto"
+                  name="hora_do_termino_previsto"
+                  required
+                />
+              </div>
             </div>
-            
-            <!-- Parte 4: Responsáveis -->
-            <div class="form-section">
-                <h2>Assinaturas dos Responsáveis</h2>
-                
-                <div class="form-group">
-                    <input type="text" name="assinatura_do_responavel_da_equipe_de_trabalho" placeholder="Responsável da Equipe de Trabalho" required>
-                </div>
-                
-                <div class="form-group">
-                    <input type="text" name="assinatura_do_responsavel_pelo_site" placeholder="Responsável pelo Site" required>
-                </div>
-                
-                <div class="form-group">
-                    <input type="text" name="assinatura_do_tecnico_de_seguranca" placeholder="Técnico de Segurança" required>
-                </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="setor">Setor</label>
+                <i class="fas fa-map input-icon"></i>
+                <input
+                  type="text"
+                  id="setor"
+                  name="setor"
+                  placeholder="Ex: Produção, Manutenção"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="local_especifico">Local Específico</label>
+                <i class="fas fa-map-marker-alt input-icon"></i>
+                <input
+                  type="text"
+                  id="local_especifico"
+                  name="local_especifico"
+                  placeholder="Ex: Galpão 3, Setor B"
+                  required
+                />
+              </div>
             </div>
-            
-            <button type="submit">Enviar Formulário</button>
-        </form>
+
+            <div class="form-group">
+              <label for="endereco_comercial">Endereço Comercial</label>
+              <i class="fas fa-building input-icon"></i>
+              <input
+                type="text"
+                id="endereco_comercial"
+                name="endereco_comercial"
+                placeholder="Ex: Av. Principal, 1000 - Bairro - Cidade/UF"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Parte 2: Atividades -->
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-tasks"></i>
+              </div>
+              <h2 class="section-title">Atividades a Serem Realizadas</h2>
+            </div>
+
+            <div class="checkbox-container">
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="trabalho_em_altura"
+                  name="trabalho_em_altura"
+                />
+                <label for="trabalho_em_altura">Trabalho em Altura</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="energia_perigosas"
+                  name="energia_perigosas"
+                />
+                <label for="energia_perigosas">Energias Perigosas</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="equipamentos_moveis"
+                  name="equipamentos_moveis"
+                />
+                <label for="equipamentos_moveis">Equipamentos Móveis</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="icamento_de_cargas"
+                  name="icamento_de_cargas"
+                />
+                <label for="icamento_de_cargas">Içamento de Cargas</label>
+              </div>
+
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="espaco_confinado"
+                  name="espaco_confinado"
+                />
+                <label for="espaco_confinado">Espaço Confinado</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="outras_atividades">Outras Atividades</label>
+              <textarea
+                id="outras_atividades"
+                name="outras_atividades"
+                placeholder="Descreva outras atividades que serão realizadas..."
+              ></textarea>
+            </div>
+
+            <!-- Riscos Identificados -->
+            <div class="risks-container">
+              <div class="risks-title">
+                <i class="fas fa-exclamation-triangle"></i>
+                Riscos Identificados
+              </div>
+              <div id="riscos_identificados">
+                <p>
+                  Selecione as atividades acima para visualizar os riscos
+                  associados.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parte 3: Riscos -->
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <h2 class="section-title">Observações sobre Riscos</h2>
+            </div>
+
+            <div class="form-group">
+              <label for="todos_riscos_vao_ser_enviados_por_wpp"
+                >Observações Adicionais</label
+              >
+              <textarea
+                id="todos_riscos_vao_ser_enviados_por_wpp"
+                name="todos_riscos_vao_ser_enviados_por_wpp"
+                placeholder="Adicione observações sobre os riscos identificados..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Parte 4: Responsáveis -->
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <i class="fas fa-signature"></i>
+              </div>
+              <h2 class="section-title">Assinaturas dos Responsáveis</h2>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group signature-field">
+                <label for="assinatura_do_responavel_da_equipe_de_trabalho"
+                  >Responsável da Equipe de Trabalho</label
+                >
+                <i class="fas fa-user-hard-hat input-icon"></i>
+                <input
+                  type="text"
+                  id="assinatura_do_responavel_da_equipe_de_trabalho"
+                  name="assinatura_do_responavel_da_equipe_de_trabalho"
+                  placeholder="Nome completo"
+                  required
+                />
+              </div>
+
+              <div class="form-group signature-field">
+                <label for="assinatura_do_responsavel_do_sites"
+                  >Responsável pelo Site</label
+                >
+                <i class="fas fa-user-tie input-icon"></i>
+                <input
+                  type="text"
+                  id="assinatura_do_responsavel_do_sites"
+                  name="assinatura_do_responsavel_do_sites"
+                  placeholder="Nome completo"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group signature-field">
+              <label for="assinatura_do_tecnico_de_seguranca"
+                >Técnico de Segurança</label
+              >
+              <i class="fas fa-user-shield input-icon"></i>
+              <input
+                type="text"
+                id="assinatura_do_tecnico_de_seguranca"
+                name="assinatura_do_tecnico_de_seguranca"
+                placeholder="Nome completo"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Botões -->
+          <div class="form-section">
+            <div class="form-buttons">
+              <button type="button" class="btn btn-secondary" id="btnLimpar">
+                <i class="fas fa-eraser"></i>
+                Limpar Formulário
+              </button>
+              <button type="submit" class="btn btn-primary" id="btnEnviar">
+                <i class="fas fa-paper-plane"></i>
+                Enviar Formulário
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
 
     <script>
-        // Mapeamento de atividades para riscos
-        const riscosPorAtividade = {
-            trabalho_em_altura: [
-                "Queda de altura",
-                "Queda de materiais",
-                "Instabilidade da estrutura",
-                "Condições climáticas adversas"
-            ],
-            energia_perigosas: [
-                "Choque elétrico",
-                "Arco voltaico",
-                "Queimaduras",
-                "Incêndio"
-            ],
-            equipamentos_moveis: [
-                "Atropelamento",
-                "Queda de máquina",
-                "Aperto entre objetos",
-                "Ruído excessivo"
-            ],
-            icamento_de_cargas: [
-                "Queda de carga",
-                "Rompimento de cabo",
-                "Sobrecarga",
-                "Movimento brusco da carga"
-            ],
-            espaco_confinado: [
-                "Deficiência de oxigênio",
-                "Intoxicação por gases",
-                "Incêndio/explosão",
-                "Queda dentro do espaço"
-            ]
-        };
+      // Mapeamento de atividades para riscos
+      const riscosPorAtividade = {
+        trabalho_em_altura: [
+          "Queda de altura",
+          "Queda de materiais",
+          "Instabilidade da estrutura",
+          "Condições climáticas adversas",
+        ],
+        energia_perigosas: [
+          "Choque elétrico",
+          "Arco voltaico",
+          "Queimaduras",
+          "Incêndio",
+        ],
+        equipamentos_moveis: [
+          "Atropelamento",
+          "Queda de máquina",
+          "Aperto entre objetos",
+          "Ruído excessivo",
+        ],
+        icamento_de_cargas: [
+          "Queda de carga",
+          "Rompimento de cabo",
+          "Sobrecarga",
+          "Movimento brusco da carga",
+        ],
+        espaco_confinado: [
+          "Deficiência de oxigênio",
+          "Intoxicação por gases",
+          "Incêndio/explosão",
+          "Queda dentro do espaço",
+        ],
+      };
 
-        // Função para atualizar os riscos
-        function atualizarRiscos() {
-            const textareaRiscos = document.getElementById('riscos_atividades');
-            let riscos = [];
-            
-            // Verifica cada checkbox marcado
-            document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(checkbox => {
-                const atividade = checkbox.id;
-                if (riscosPorAtividade[atividade]) {
-                    riscos = riscos.concat(riscosPorAtividade[atividade]);
-                }
-            });
-            
-            // Adiciona riscos das outras atividades se houver texto
-            const outrasAtividades = document.querySelector('textarea[name="outras_atividades"]').value;
-            if (outrasAtividades.trim() !== '') {
-                riscos.push("Riscos específicos das atividades adicionais devem ser avaliados");
+      // Função para atualizar os riscos
+      function atualizarRiscos() {
+        const riscosContainer = document.getElementById("riscos_identificados");
+        const textareaRiscos = document.getElementById(
+          "todos_riscos_vao_ser_enviados_por_wpp"
+        );
+        let riscos = [];
+        let riscosHTML = "";
+
+        // Verifica cada checkbox marcado
+        document
+          .querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
+          .forEach((checkbox) => {
+            const atividade = checkbox.id;
+            if (riscosPorAtividade[atividade]) {
+              riscos = riscos.concat(riscosPorAtividade[atividade]);
             }
-            
-            // Atualiza o textarea com mais espaçamento
-            if (riscos.length > 0) {
-                textareaRiscos.value = "RISCOS IDENTIFICADOS:\n\n" + riscos.join("\n\n");
-            } else {
-                textareaRiscos.value = "";
-            }
+          });
+
+        // Adiciona riscos das outras atividades se houver texto
+        const outrasAtividades = document.querySelector(
+          'textarea[name="outras_atividades"]'
+        ).value;
+        if (outrasAtividades.trim() !== "") {
+          riscos.push(
+            "Riscos específicos das atividades adicionais devem ser avaliados"
+          );
         }
 
-        // Adiciona listeners para os checkboxes e textarea
-        document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', atualizarRiscos);
+        // Atualiza o container de riscos
+        if (riscos.length > 0) {
+          riscos.forEach((risco) => {
+            riscosHTML += `
+                        <div class="risk-item">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>${risco}</span>
+                        </div>
+                    `;
+          });
+          riscosContainer.innerHTML = riscosHTML;
+
+          // Atualiza o textarea com os riscos
+          textareaRiscos.value =
+            "RISCOS IDENTIFICADOS:\n\n" + riscos.join("\n");
+        } else {
+          riscosContainer.innerHTML =
+            "<p>Selecione as atividades acima para visualizar os riscos associados.</p>";
+          textareaRiscos.value = "";
+        }
+      }
+
+      // Função para combinar horários
+      function combinarHorarios() {
+        const horaInicio = document.getElementById("hora_do_inicio").value;
+        const horaTermino = document.getElementById(
+          "hora_do_termino_previsto"
+        ).value;
+
+        if (horaInicio && horaTermino) {
+          return `${horaInicio} às ${horaTermino}`;
+        }
+        return "";
+      }
+
+      // Adiciona listeners para os checkboxes e textarea
+      document
+        .querySelectorAll('.checkbox-group input[type="checkbox"]')
+        .forEach((checkbox) => {
+          checkbox.addEventListener("change", atualizarRiscos);
         });
 
-        document.querySelector('textarea[name="outras_atividades"]').addEventListener('input', atualizarRiscos);
+      document
+        .querySelector('textarea[name="outras_atividades"]')
+        .addEventListener("input", atualizarRiscos);
+
+      // Botão limpar
+      document
+        .getElementById("btnLimpar")
+        .addEventListener("click", function () {
+          if (confirm("Tem certeza que deseja limpar todos os campos?")) {
+            document.getElementById("formSeguranca").reset();
+            atualizarRiscos();
+          }
+        });
+
+      // Envio do formulário
+      document
+        .getElementById("formSeguranca")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Combinar horários antes de enviar
+          const horaInicio = document.getElementById("hora_do_inicio").value;
+          const horaTermino = document.getElementById(
+            "hora_do_termino_previsto"
+          ).value;
+          const horaCombinada = `${horaInicio} às ${horaTermino}`;
+
+          // Criar objeto com os dados do formulário
+          const formData = new FormData(this);
+
+          // Remover campos individuais de horário e adicionar o combinado
+          formData.delete("hora_do_inicio");
+          formData.delete("hora_do_termino_previsto");
+          formData.append(
+            "hora_do_inicio_e_previsao_do_termino",
+            horaCombinada
+          );
+
+          // Converter checkboxes para "Sim" ou "Não"
+          document
+            .querySelectorAll('.checkbox-group input[type="checkbox"]')
+            .forEach((checkbox) => {
+              formData.set(checkbox.name, checkbox.checked ? "Sim" : "Não");
+            });
+
+          // Converter para objeto JSON
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch("/Formulario/criar", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+              alert("Formulário enviado com sucesso!");
+              window.location.href = "./listagem.html";
+            } else {
+              const errorData = await response.text();
+              alert(`Erro ao enviar formulário: ${errorData}`);
+            }
+          } catch (error) {
+            console.error("Erro:", error);
+            alert(
+              "Erro ao enviar formulário. Verifique sua conexão e tente novamente."
+            );
+          }
+        });
+
+      // Inicializar
+      atualizarRiscos();
     </script>
-</body>
+  </body>
 </html>

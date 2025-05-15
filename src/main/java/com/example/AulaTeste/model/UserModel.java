@@ -5,15 +5,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "usuario")
-@AllArgsConstructor
-@NoArgsConstructor
-
 public class UserModel {
    
     @Id()
@@ -47,4 +42,6 @@ public class UserModel {
     @Column(name  = "responsavel")
     private String responsavel;
  
+    @Column(name  = "senha")
+    private String senha;
 }
