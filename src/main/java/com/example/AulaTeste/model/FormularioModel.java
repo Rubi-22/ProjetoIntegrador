@@ -11,8 +11,8 @@ import lombok.Data;
 @Entity(name = "Formulario")
 public class FormularioModel{
    
-    @Id()
-    @GeneratedValue()
+    @Id
+    @GeneratedValue(generator = "UUID")
     private UUID codigo_usuario;
 
    // @Column(name = "nome_dos_trabalhadores") cabecalho_parte 1
